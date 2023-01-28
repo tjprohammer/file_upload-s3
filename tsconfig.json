@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es5",
+    "allowJs": true,
+    "jsx": "react",
+    "module": "es6",
+    "moduleResolution": "node",
+    "noResolve": false,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "removeComments": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noEmit": false,
+    "strict": true,
+    "checkJs": true,
+    "outDir": "build",
+    "composite": true,
+    "lib": ["es6", "es7", "dom"],
+    "baseUrl": "src",
+    "paths": {
+      "app/*": ["./app/*"]
+    },
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["**/*", "index.d.ts", "src/index.tsx"],
+  "exclude": ["build", "node_modules"]
+}
