@@ -8,3 +8,9 @@ file upload to aws s3 using images which then display as a gallery in the fronte
 5.) Once file is uploaded, return a response to the client indicating that the file was successfully uploaded  
 6.) Display uploaded images in a gallery  
 
+Requirements  
+- display images front private bucket
+
+
+AWS-SDK  
+NodeJS  
