@@ -1,0 +1,11 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.image {
+    margin-top: 2em;
+    display: flex;
+    width: 20rem;
+}

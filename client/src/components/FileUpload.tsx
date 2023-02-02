@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './fileUpload.css'
 interface Props {}
 
 interface FileState {
@@ -60,7 +60,7 @@ const FileUpload: React.FC<Props> = () => {
         <div> 
       <input type="file" onChange={handleChange} />
       <button onClick={handleUpload}>Upload</button>
-      <img src={previewImage as string} />
+      <img className='image' src={previewImage as string} />
     </div>
     )
 };

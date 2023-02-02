@@ -10,6 +10,8 @@ file upload to aws s3 using images which then display as a gallery in the fronte
 
 Requirements  
 - display images front private bucket
+- add login screen?
+- 
 
 
 AWS-SDK  

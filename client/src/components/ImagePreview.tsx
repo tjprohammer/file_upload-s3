@@ -17,7 +17,7 @@ const ImagePreview: React.FC = () => {
   return (
     <div>
       <input type="file" onChange={handleImageChange} />
-      {previewImage && <img src={previewImage as string} alt="Preview" />}
+      {previewImage && <img className="image" src={previewImage as string} alt="Preview" />}
     </div>
   );
 };
