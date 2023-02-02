@@ -1,5 +1,6 @@
+
 import * as React from "react";
-import FormLayout from "./components/FormLayout";
+import FormLayout from "./components/FileUpload";
 
 export interface IAppProps {}
 

@@ -10,6 +10,7 @@ interface FileState {
 const url = 'http://localhost:5005/api/upload'
 
 const FileUpload: React.FC<Props> = () => {
+  const [previewImage, setPreviewImage] = React.useState<string | ArrayBuffer | null>("");
     const [file, setFile] = React.useState<FileState>({
         file: null,
         fileName: ''
@@ -20,6 +21,15 @@ const FileUpload: React.FC<Props> = () => {
             file: event.target.files ? event.target.files[0] : null,
             fileName: event.target.files ? event.target.files[0].name : ''
         });
+
+        const imgFile = event.target.files && event.target.files[0];
+        if (!imgFile) return;
+
+        const reader = new FileReader();
+        reader.onload = event => {
+          setPreviewImage(event.target && event.target.result);
+        };
+        reader.readAsDataURL(imgFile);
     };
 
     const handleUpload = () => {
@@ -50,6 +60,7 @@ const FileUpload: React.FC<Props> = () => {
         <div> 
       <input type="file" onChange={handleChange} />
       <button onClick={handleUpload}>Upload</button>
+      <img src={previewImage as string} />
     </div>
     )
 };
