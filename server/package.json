@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "type": "commonjs",
+  "proxy": "localhost:5005",
   "scripts": {
     "server": "nodemon ./src/index.js",
     "client": "npm start --prefix ../client",

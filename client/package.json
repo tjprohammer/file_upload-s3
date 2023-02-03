@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "file_upload-s3",
   "main": "index.tsx",
+  
   "scripts": {
     "start": "webpack-dev-server ./src/",
     "build": "webpack ."

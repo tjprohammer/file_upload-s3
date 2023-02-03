@@ -1,67 +1,67 @@
-import React from 'react';
-import './fileUpload.css'
+import React from "react";
+import "./fileUpload.css";
+
 interface Props {}
 
 interface FileState {
-    file: File | null;
-    fileName: string;
+  file: File | null;
+  fileName: string;
+  fileType?: string | null;
 }
 
-const url = 'http://localhost:5005/api/upload'
+const url = "http://localhost:5005/api/upload";
 
 const FileUpload: React.FC<Props> = () => {
-  const [previewImage, setPreviewImage] = React.useState<string | ArrayBuffer | null>("");
-    const [file, setFile] = React.useState<FileState>({
-        file: null,
-        fileName: ''
+  const [previewImage, setPreviewImage] = React.useState<
+    string | ArrayBuffer | null
+  >(null);
+  const [file, setFile] = React.useState<FileState>({
+    file: null,
+    fileName: "",
+    
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFile({
+      file: event.target.files ? event.target.files[0] : null,
+      fileName: event.target.files ? event.target.files[0].name : "",
+      fileType: event.target.files && event.target.files[0].type,
     });
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFile({
-            file: event.target.files ? event.target.files[0] : null,
-            fileName: event.target.files ? event.target.files[0].name : ''
-        });
+    const imgFile = event.target.files && event.target.files[0];
+    if (!imgFile) return;
 
-        const imgFile = event.target.files && event.target.files[0];
-        if (!imgFile) return;
-
-        const reader = new FileReader();
-        reader.onload = event => {
-          setPreviewImage(event.target && event.target.result);
-        };
-        reader.readAsDataURL(imgFile);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setPreviewImage(event.target && event.target.result);
     };
+    reader.readAsDataURL(imgFile);
+  };
 
-    const handleUpload = () => {
-        const formData = new FormData();
-        formData.append('file', file.file as Blob, file.fileName);
-    formData.append('fileName', file.fileName);
+  const handleUpload = async () => {
+    //function that create FormData object
+    const data = new FormData();
+    //object data needs to appends the file information
+    //filename, file, filetype, key
+    data.append("Key", file.fileName);
+    if (file.fileType) data.append("fileType", file.fileType);
+    data.append("file", file.file!);
+    //fetch function to POST request to the URL with the data as the body
+    const response = await fetch(url, {
+      method: "POST",
+      body: data,
+    });
+    //The response from the server is then processed and stored as imagedata by calling response.json()
+    const imageData = await response.json();
 
-    fetch(url, {
-        method: 'POST',
-        body: formData
-      })
-        .then(response => response.json())
-        .then(data => {
-          const presignedUrl = data.presignedUrl;
-          fetch(presignedUrl, {
-            method: 'PUT',
-            body: file.file as Blob
-          }).then(response => {
-            if (response.status === 200) {
-              console.log('File uploaded');
-            }
-          });
-        });
-    };
-
-    
-    return (
-        <div> 
+    console.log(imageData);
+  };
+  return (
+    <div>
       <input type="file" onChange={handleChange} />
       <button onClick={handleUpload}>Upload</button>
-      <img className='image' src={previewImage as string} />
+      {previewImage && <img className="image" src={previewImage as string} />}
     </div>
-    )
+  );
 };
-export default FileUpload
+export default FileUpload;

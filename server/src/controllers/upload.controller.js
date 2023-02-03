@@ -1,37 +1,36 @@
-const AWS = require('aws-sdk');
-require('dotenv').config();
+const AWS = require("aws-sdk");
+require("dotenv").config();
 
 //Configure the AWS SDK credencials
 AWS.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
 });
 
-
 const uploadController = {
-    uploadFile: async(req, res) => {
-
-        //Create a new s3 instance
+  uploadFile: async (req, res) => {
+    console.log("Request Body", req.body);
+    //Create a new s3 instance
     const s3 = new AWS.S3();
 
     //Define the params
     const s3Params = {
-        Bucket: "fileuploadtos3test",
-        Key: req.body.fileName,
-        Expires: 60,
-        ContentType: req.body.fileType,
-        ACL: 'private'
+      Bucket: "fileuploadtos3test",
+      Key: req.body.fileName,
+      Expires: 60,
+      ContentType: req.body.fileType,
+      ACL: "private",
     };
 
-        //Generate the presigne URL
-    s3.getSignedUrl("putObject", params, (err, url) => {
-        if(err) {
-            return res.send({error: err});
-        }
+    //Generate the presigne URL
+    s3.getSignedUrl("putObject", s3Params, (err, url) => {
+      if (err) {
+        return res.status(500).send({ error: err });
+      }
 
-        return res.send({url});
+      return res.send({ url });
     });
-}
+  },
 };
 
-module.exports = uploadController
+module.exports = uploadController;
