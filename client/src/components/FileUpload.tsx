@@ -49,7 +49,7 @@ const FileUpload: React.FC<Props> = () => {
     //fetch function to POST request to the URL with the data as the body
     const response = await fetch(url, {
       method: "POST",
-      body: data,
+      body: file.fileName,
     });
     //The response from the server is then processed and stored as imagedata by calling response.json()
     const imageData = await response.json();
