@@ -38,19 +38,18 @@ const FileUpload: React.FC<Props> = () => {
     reader.readAsDataURL(imgFile);
   };
 
-  const handleUpload = async () => {
-    //function that create FormData object
-    const data = new FormData();
-    //object data needs to appends the file information
-    //filename, file, filetype, key
-    data.append("Key", file.fileName);
-    if (file.fileType) data.append("fileType", file.fileType);
-    data.append("file", file.file!);
+  const handleUpload = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const formData = new FormData();
+    formData.append("file", file.file as Blob, file.fileName);
     //fetch function to POST request to the URL with the data as the body
     const response = await fetch(url, {
-      method: "POST",
-      body: file.fileName,
+      method: "PUT",
+      body: formData,
     });
+
+    if (!response.ok) {
+      throw new Error(`Failed to upload file, status code: ${response.status}`);
+    }
     //The response from the server is then processed and stored as imagedata by calling response.json()
     const imageData = await response.json();
 

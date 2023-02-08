@@ -11,24 +11,26 @@ AWS.config.update({
 
 const uploadController = {
   uploadFile: async (req, res) => {
-    //Create a new s3 instance
+        //Create a new s3 instance
     const s3 = new AWS.S3();
 
+    var Key = req.body.file
     //Define the params
     const s3Params = {
       Bucket: "fileuploadtos3test",
-      Key: fileName,
-      Expires: 300,
+      Key: 'test',
+      Expires: 3600,
     };
 
     //Generate the presigned URL
     s3.getSignedUrl("putObject", s3Params, (err, url) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(url);
-      }
-    });
+        if (err) {
+          res.status(500).send({ error: err });
+        } else {
+          res.send({ url });
+          console.log("Signed URL:", url)
+        }
+    });    
   },
 };
 
